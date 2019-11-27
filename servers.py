@@ -6,7 +6,9 @@ from typing import Optional
 
 class Product:
     # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą argumenty wyrażające nazwę produktu (typu str) i jego cenę (typu float) -- w takiej kolejności -- i ustawiającą atrybuty `name` (typu str) oraz `price` (typu float)
-    pass
+    def __init__(self, name: str, price: float):
+        self.name = name
+        self.price = price
 
 
 class TooManyProductsFoundError:

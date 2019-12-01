@@ -11,13 +11,13 @@ class Product:
 
 
 class TooManyProductsFoundError(Exception):
-    def __init__(self, n):
-        super().__init__('Too many products! Found {}, but max is 5.'.format(n))
+    def __init__(self):
+        super().__init__('Too many products!')
 
 
 def search_product(n: int):
     if n > 5:
-        raise TooManyProductsFoundError(n)
+        raise TooManyProductsFoundError
     return n
 
 # FIXME: Każada z poniższych klas serwerów powinna posiadać: (1) metodę inicjalizacyjną przyjmującą listę obiektów typu
@@ -42,4 +42,7 @@ class Client:
         raise NotImplementedError()
 
 
-print(search_product(6))
+try:
+    search_product(6)
+except TooManyProductsFoundError:
+    print('Too many products')

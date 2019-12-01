@@ -11,10 +11,14 @@ class Product:
 
 
 class TooManyProductsFoundError(Exception):
-    def __init__(self):
-        super().__init__("Too many products !")
-    # Reprezentuje wyjątek związany ze znalezieniem zbyt dużej liczby produktów.
-    pass
+    def __init__(self, n):
+        super().__init__('Too many products! Found {}, but max is 5.'.format(n))
+
+
+def search_product(n: int):
+    if n > 5:
+        raise TooManyProductsFoundError(n)
+    return n
 
 # FIXME: Każada z poniższych klas serwerów powinna posiadać: (1) metodę inicjalizacyjną przyjmującą listę obiektów typu
 #  `Product` i ustawiającą atrybut `products` zgodnie z typem reprezentacji produktów na danym serwerze, (2) możliwość
@@ -36,3 +40,6 @@ class Client:
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         raise NotImplementedError()
+
+
+print(search_product(6))

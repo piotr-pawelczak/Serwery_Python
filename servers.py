@@ -10,7 +10,9 @@ class Product:
         self.price = price
 
 
-class TooManyProductsFoundError:
+class TooManyProductsFoundError(Exception):
+    def __init__(self):
+        super().__init__("Too many products !")
     # Reprezentuje wyjątek związany ze znalezieniem zbyt dużej liczby produktów.
     pass
 

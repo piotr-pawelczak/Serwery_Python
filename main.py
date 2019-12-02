@@ -1,13 +1,15 @@
 from servers import *
 
-product_1 = Product('AB12', 10)
-product_2 = Product('ab123', 15)
-product_3 = Product('A12', 20)
-product_4 = Product('ab1', 20)
-product_5 = Product('Ab1234', 25)
-product_6 = Product('Abc12', 30)
+product_1 = Product('AB12', 421)
+product_2 = Product('ab123', 333)
+product_3 = Product('Aa12', 111)
+product_4 = Product('ab11', 999)
+product_5 = Product('Ab134', 123)
+product_6 = Product('Ar12', 211)
+product_7 = Product('Aaa123', 111)
+product_8 = Product('huj99', 10)
 
-product_list = [product_1, product_2, product_3, product_4, product_5, product_6]
+product_list = [product_1, product_2, product_3, product_4, product_5, product_6, product_7, product_8]
 
 server_list = ListServer(product_list)
 server_dict = MapServer(product_list)
@@ -21,15 +23,24 @@ for k, v in server_dict.products.items():
     print(f'Name: {k}, Price: {v.price}')
 
 
-print('\n_________ListServer Match Test_____________')
-result_list = server_list.get_entries(2)
-for elem in result_list:
-    print(f'Name: {elem.name}, Price: {elem.price}')
+print('\n__________ListServer Match Test____________')
+try:
+    result_list = server_list.get_entries(3)
+    for elem in result_list:
+        print(f'Name: {elem.name}, Price: {elem.price}')
+except TooManyProductsFoundError:
+    print('Too many products!')
 
 
 print('\n__________MapServer Match Test____________')
-result_dict = server_list.get_entries(2)
-for elem in result_dict:
-    print(f'Name: {elem.name}, Price: {elem.price}')
+try:
+    result_dict = server_dict.get_entries(3)
+    for elem in result_dict:
+        print(f'Name: {elem.name}, Price: {elem.price}')
+except TooManyProductsFoundError:
+    print('Too many products!')
+
+
+
 
 

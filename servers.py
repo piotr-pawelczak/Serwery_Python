@@ -17,11 +17,6 @@ class TooManyProductsFoundError(Exception):
         super().__init__('Too many products!')
 
 
-# FIXME: Każada z poniższych klas serwerów powinna posiadać:
-#  (3) możliwość odwołania się do metody `get_entries(self, n_letters)`
-#  zwracającą listę produktów spełniających kryterium wyszukiwania
-
-
 class Server(ABC):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,6 +42,10 @@ class ListServer(Server):
             if match:
                 result.append(elem)
 
+        result = sorted(result, key=lambda product: product.price)
+        if len(result) > self.n_max_returned_entries:
+            raise TooManyProductsFoundError()
+
         return result
 
 
@@ -65,6 +64,10 @@ class MapServer(Server):
             match = re.match(pattern, k)
             if match:
                 result.append(v)
+
+        result = sorted(result, key=lambda product: product.price)
+        if len(result) > self.n_max_returned_entries:
+            raise TooManyProductsFoundError()
 
         return result
 

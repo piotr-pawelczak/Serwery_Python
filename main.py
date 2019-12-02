@@ -19,3 +19,17 @@ for elem in server_list.products:
 print('\nMapServer: ')
 for k, v in server_dict.products.items():
     print(f'Name: {k}, Price: {v.price}')
+
+
+print('\n_________ListServer Match Test_____________')
+result_list = server_list.get_entries(2)
+for elem in result_list:
+    print(f'Name: {elem.name}, Price: {elem.price}')
+
+
+print('\n__________MapServer Match Test____________')
+result_dict = server_list.get_entries(2)
+for elem in result_dict:
+    print(f'Name: {elem.name}, Price: {elem.price}')
+
+

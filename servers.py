@@ -79,9 +79,16 @@ class Client:
         self.server = server
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
-        total_price: float = 0
-        product_list: List[Product] = self.server.get_entries(n_letters)
+        try:
+            total_price: float = 0
+            product_list: List[Product] = self.server.get_entries(n_letters)
 
-        for elem in product_list:
-            total_price += elem.price
+            for elem in product_list:
+                total_price += elem.price
+        except TooManyProductsFoundError:
+                return None
+
+        if len(product_list) == 0:
+            return None
+
         return total_price

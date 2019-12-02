@@ -3,6 +3,7 @@
 
 from typing import Optional, List
 from abc import ABC, abstractmethod
+import re
 
 
 class Product:
@@ -16,8 +17,7 @@ class TooManyProductsFoundError(Exception):
         super().__init__('Too many products!')
 
 
-# FIXME: Każada z poniższych klas serwerów powinna posiadać: (1) metodę inicjalizacyjną przyjmującą listę obiektów typu
-#  `Product` i ustawiającą atrybut `products` zgodnie z typem reprezentacji produktów na danym serwerze,
+# FIXME: Każada z poniższych klas serwerów powinna posiadać:
 #  (3) możliwość odwołania się do metody `get_entries(self, n_letters)`
 #  zwracającą listę produktów spełniających kryterium wyszukiwania
 
@@ -27,8 +27,10 @@ class Server(ABC):
         super().__init__(*args, **kwargs)
 
     @abstractmethod
-    def get_entries(self, n_letters: int):
+    def get_entries(self, n_letters: int = 1):
         pass
+
+    n_max_returned_entries: int = 5
 
 
 class ListServer(Server):
@@ -36,8 +38,16 @@ class ListServer(Server):
         super().__init__(*args, **kwargs)
         self.products = products
 
-    def get_entries(self, n_letters: int):
-        pass
+    def get_entries(self, n_letters: int = 1):
+        pattern: str = r'^[a-zA-Z]{' + str(n_letters) + r'}\d{2,3}$'
+        result: List[Product] = []
+
+        for elem in self.products:
+            match = re.match(pattern, elem.name)
+            if match:
+                result.append(elem)
+
+        return result
 
 
 class MapServer(Server):
@@ -47,8 +57,16 @@ class MapServer(Server):
         for elem in products:
             self.products[elem.name] = elem
 
-    def get_entries(self, n_letters: int):
-        pass
+    def get_entries(self, n_letters: int = 1):
+        pattern: str = r'^[a-zA-Z]{' + str(n_letters) + r'}\d{2,3}$'
+        result: List[Product] = []
+
+        for k, v in self.products.items():
+            match = re.match(pattern, k)
+            if match:
+                result.append(v)
+
+        return result
 
 
 class Client:

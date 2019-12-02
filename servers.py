@@ -16,7 +16,7 @@ class TooManyProductsFoundError(Exception):
     def __init__(self):
         super().__init__('Too many products!')
 
-
+# TODO: dodać do klasy Server logikę dopasowania nazwy i rzucania wyjątku
 class Server(ABC):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -77,5 +77,3 @@ class Client:
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         raise NotImplementedError()
-
-# daje cos

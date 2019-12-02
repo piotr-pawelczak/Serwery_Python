@@ -17,10 +17,11 @@ class TooManyProductsFoundError(Exception):
         super().__init__('Too many products!')
 
 
-# TODO: dodać do klasy Server logikę rzucania wyjątku
 class Server(ABC):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    n_max_returned_entries: int = 3
 
     @staticmethod
     def matched(name: str, n_letters: int) -> bool:
@@ -32,7 +33,9 @@ class Server(ABC):
     def get_entries(self, n_letters: int = 1):
         pass
 
-    n_max_returned_entries: int = 3
+    def product_number_validator(self, result):
+        if len(result) > self.n_max_returned_entries:
+            raise TooManyProductsFoundError()
 
 
 class ListServer(Server):
@@ -49,9 +52,7 @@ class ListServer(Server):
                 result.append(elem)
 
         result = sorted(result, key=lambda product: product.price)
-        if len(result) > self.n_max_returned_entries:
-            raise TooManyProductsFoundError()
-
+        self.product_number_validator(result)
         return result
 
 
@@ -70,9 +71,7 @@ class MapServer(Server):
                 result.append(v)
 
         result = sorted(result, key=lambda product: product.price)
-        if len(result) > self.n_max_returned_entries:
-            raise TooManyProductsFoundError()
-
+        self.product_number_validator(result)
         return result
 
 

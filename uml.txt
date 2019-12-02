@@ -1,0 +1,31 @@
+@startuml
+
+class Product {
+  + name: string
+  + price: float
+  + __init__(self: Product, name: string, price: float)
+}
+
+class Exception
+
+class TooManyProductsFoundError
+
+abstract class Server
+
+class ListServer
+
+class MapServer
+
+class Client
+
+
+Server <|-- ListServer
+Server <|-- MapServer
+Server <.. TooManyProductsFoundError : << uses >>
+Server <|-- Client
+Exception <|-- TooManyProductsFoundError
+MapServer *-- Product
+ListServer *-- Product
+
+hide empty members
+@enduml

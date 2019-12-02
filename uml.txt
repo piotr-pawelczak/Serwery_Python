@@ -1,27 +1,39 @@
 @startuml
 
 class Product {
-  + name: string
-  + price: float
-  + __init__(self: Product, name: string, price: float)
+    + name: string
+    + price: float
+    + __init__(self: Product, name: string, price: float)
 }
 
 class Exception
 
 class TooManyProductsFoundError
 
-abstract class Server
+abstract class Server {
+    + n_max_returned_entries: int = 5
+    +{abstract} get_entries(self, n_letters: int)
 
-class ListServer
+}
 
-class MapServer
+class ListServer {
+    + __init__(self: ListServer, products: List[Product])
+    + get_entries(self, n_letters: int)
+}
 
-class Client
+class MapServer {
+    + __init__(self: MapServer, products: List[Product])
+    + get_entries(self, n_letters: int)
+}
+
+class Client {
+    + get_total_price(self, n_letters: Optional[int])
+}
 
 
 Server <|-- ListServer
 Server <|-- MapServer
-Server <.. TooManyProductsFoundError : << uses >>
+TooManyProductsFoundError <.. Server : << uses >>
 Server <|-- Client
 Exception <|-- TooManyProductsFoundError
 MapServer *-- Product

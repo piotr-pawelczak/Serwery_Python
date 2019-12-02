@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+from typing import Optional, List, Dict
+from abc import ABC, abstractmethod
 
 
 class Product:
@@ -16,18 +17,34 @@ class TooManyProductsFoundError(Exception):
 
 
 # FIXME: Każada z poniższych klas serwerów powinna posiadać: (1) metodę inicjalizacyjną przyjmującą listę obiektów typu
-#  `Product` i ustawiającą atrybut `products` zgodnie z typem reprezentacji produktów na danym serwerze, (2) możliwość
-#  odwołania się do atrybutu klasowego `n_max_returned_entries` (typu int) wyrażający maksymalną dopuszczalną liczbę
-#  wyników wyszukiwania, (3) możliwość odwołania się do metody `get_entries(self, n_letters)`
+#  `Product` i ustawiającą atrybut `products` zgodnie z typem reprezentacji produktów na danym serwerze,
+#  (3) możliwość odwołania się do metody `get_entries(self, n_letters)`
 #  zwracającą listę produktów spełniających kryterium wyszukiwania
 
 
-class ListServer:
-    pass
+class Server(ABC):
+    n_max_returned_entries: int = 5
+    @abstractmethod
+    def get_entries(self, n_letters: int):
+        pass
 
 
-class MapServer:
-    pass
+class ListServer(Server):
+    def __init__(self, products: List[Product]):
+        self.products = products
+
+    def get_entries(self, n_letters: int):
+        pass
+
+
+class MapServer(Server):
+    def __init__(self, products: List[Product]):
+        self.products = {}
+        for elem in products:
+            self.products[elem.name] = elem
+
+    def get_entries(self, n_letters: int):
+        pass
 
 
 class Client:

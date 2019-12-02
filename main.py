@@ -5,7 +5,7 @@ product_2 = Product('ab123', 333)
 product_3 = Product('Aa12', 111)
 product_4 = Product('ab11', 999)
 product_5 = Product('Ab134', 123)
-product_6 = Product('Ar12', 211)
+product_6 = Product('Addr12', 211)
 product_7 = Product('Aaa123', 111)
 product_8 = Product('huj99', 10)
 
@@ -25,7 +25,7 @@ for k, v in server_dict.products.items():
 
 print('\n__________ListServer Match Test____________')
 try:
-    result_list = server_list.get_entries(3)
+    result_list = server_list.get_entries(2)
     for elem in result_list:
         print(f'Name: {elem.name}, Price: {elem.price}')
 except TooManyProductsFoundError:
@@ -34,7 +34,7 @@ except TooManyProductsFoundError:
 
 print('\n__________MapServer Match Test____________')
 try:
-    result_dict = server_dict.get_entries(3)
+    result_dict = server_dict.get_entries(2)
     for elem in result_dict:
         print(f'Name: {elem.name}, Price: {elem.price}')
 except TooManyProductsFoundError:

@@ -16,16 +16,23 @@ class TooManyProductsFoundError(Exception):
     def __init__(self):
         super().__init__('Too many products!')
 
-# TODO: dodać do klasy Server logikę dopasowania nazwy i rzucania wyjątku
+
+# TODO: dodać do klasy Server logikę rzucania wyjątku
 class Server(ABC):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def matched(name: str, n_letters: int) -> bool:
+        pattern: str = r'^[a-zA-Z]{' + str(n_letters) + r'}\d{2,3}$'
+        match = re.match(pattern, name)
+        return True if match else False
 
     @abstractmethod
     def get_entries(self, n_letters: int = 1):
         pass
 
-    n_max_returned_entries: int = 5
+    n_max_returned_entries: int = 3
 
 
 class ListServer(Server):
@@ -38,8 +45,7 @@ class ListServer(Server):
         result: List[Product] = []
 
         for elem in self.products:
-            match = re.match(pattern, elem.name)
-            if match:
+            if self.matched(elem.name, n_letters):
                 result.append(elem)
 
         result = sorted(result, key=lambda product: product.price)
@@ -57,12 +63,10 @@ class MapServer(Server):
             self.products[elem.name] = elem
 
     def get_entries(self, n_letters: int = 1):
-        pattern: str = r'^[a-zA-Z]{' + str(n_letters) + r'}\d{2,3}$'
         result: List[Product] = []
 
         for k, v in self.products.items():
-            match = re.match(pattern, k)
-            if match:
+            if self.matched(k, n_letters):
                 result.append(v)
 
         result = sorted(result, key=lambda product: product.price)

@@ -11,34 +11,40 @@ product_8 = Product('huj99', 10)
 
 product_list = [product_1, product_2, product_3, product_4, product_5, product_6, product_7, product_8]
 
+# server_list = ListServer(product_list)
+# server_dict = MapServer(product_list)
+#
+# print('ListServer: ')
+# for elem in server_list.products:
+#     print(f'Name: {elem.name}, Price: {elem.price}')
+#
+# print('\nMapServer: ')
+# for k, v in server_dict.products.items():
+#     print(f'Name: {k}, Price: {v.price}')
+#
+#
+# print('\n__________ListServer Match Test____________')
+# try:
+#     result_list = server_list.get_entries(3)
+#     for elem in result_list:
+#         print(f'Name: {elem.name}, Price: {elem.price}')
+# except TooManyProductsFoundError:
+#     print('Too many products!')
+#
+#
+# print('\n__________MapServer Match Test____________')
+# try:
+#     result_dict = server_dict.get_entries(3)
+#     for elem in result_dict:
+#         print(f'Name: {elem.name}, Price: {elem.price}')
+# except TooManyProductsFoundError:
+#     print('Too many products!')
+
 server_list = ListServer(product_list)
-server_dict = MapServer(product_list)
+client = Client(server_list)
 
-print('ListServer: ')
-for elem in server_list.products:
-    print(f'Name: {elem.name}, Price: {elem.price}')
+print(client.get_total_price(3))
 
-print('\nMapServer: ')
-for k, v in server_dict.products.items():
-    print(f'Name: {k}, Price: {v.price}')
-
-
-print('\n__________ListServer Match Test____________')
-try:
-    result_list = server_list.get_entries(3)
-    for elem in result_list:
-        print(f'Name: {elem.name}, Price: {elem.price}')
-except TooManyProductsFoundError:
-    print('Too many products!')
-
-
-print('\n__________MapServer Match Test____________')
-try:
-    result_dict = server_dict.get_entries(3)
-    for elem in result_dict:
-        print(f'Name: {elem.name}, Price: {elem.price}')
-except TooManyProductsFoundError:
-    print('Too many products!')
 
 
 

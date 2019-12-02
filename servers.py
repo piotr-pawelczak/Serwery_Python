@@ -44,7 +44,6 @@ class ListServer(Server):
         self.products = products
 
     def get_entries(self, n_letters: int = 1):
-        pattern: str = r'^[a-zA-Z]{' + str(n_letters) + r'}\d{2,3}$'
         result: List[Product] = []
 
         for elem in self.products:
@@ -76,7 +75,13 @@ class MapServer(Server):
 
 
 class Client:
-    # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą obiekt reprezentujący serwer
+    def __init__(self, server):
+        self.server = server
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
-        raise NotImplementedError()
+        total_price: float = 0
+        product_list: List[Product] = self.server.get_entries(n_letters)
+
+        for elem in product_list:
+            total_price += elem.price
+        return total_price

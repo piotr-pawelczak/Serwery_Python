@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, List, Dict
+from typing import Optional, List
 from abc import ABC, abstractmethod
 
 
@@ -23,14 +23,17 @@ class TooManyProductsFoundError(Exception):
 
 
 class Server(ABC):
-    n_max_returned_entries: int = 5
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     @abstractmethod
     def get_entries(self, n_letters: int):
         pass
 
 
 class ListServer(Server):
-    def __init__(self, products: List[Product]):
+    def __init__(self, products: List[Product], *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.products = products
 
     def get_entries(self, n_letters: int):
@@ -38,7 +41,8 @@ class ListServer(Server):
 
 
 class MapServer(Server):
-    def __init__(self, products: List[Product]):
+    def __init__(self, products: List[Product], *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.products = {}
         for elem in products:
             self.products[elem.name] = elem
@@ -52,4 +56,3 @@ class Client:
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         raise NotImplementedError()
-

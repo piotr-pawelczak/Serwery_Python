@@ -29,9 +29,11 @@ class Server(ABC):
         match = re.match(pattern, name)
         return True if match else False
 
+# TODO: raise zamiast pass
+
     @abstractmethod
     def get_entries(self, n_letters: int = 1):
-        pass
+        pasa
 
     def product_number_validator(self, result):
         if len(result) > self.n_max_returned_entries:
@@ -73,6 +75,7 @@ class MapServer(Server):
         self.product_number_validator(result)
         return result
 
+# TODO: Dodać podpowiedź typu do serwera
 
 class Client:
     def __init__(self, server):

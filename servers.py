@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, List
+from typing import Optional, List, TypeVar
 from abc import ABC, abstractmethod
 import re
 
@@ -29,11 +29,9 @@ class Server(ABC):
         match = re.match(pattern, name)
         return True if match else False
 
-# TODO: raise zamiast pass
-
     @abstractmethod
     def get_entries(self, n_letters: int = 1):
-        pasa
+        raise NotImplementedError
 
     def product_number_validator(self, result):
         if len(result) > self.n_max_returned_entries:
@@ -75,10 +73,12 @@ class MapServer(Server):
         self.product_number_validator(result)
         return result
 
-# TODO: Dodać podpowiedź typu do serwera
+
+ServerType = TypeVar('ServerType', bound=Server)
+
 
 class Client:
-    def __init__(self, server):
+    def __init__(self, server: ServerType):
         self.server = server
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:

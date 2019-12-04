@@ -1,9 +1,10 @@
 @startuml
-
 class Product {
     + name: string
     + price: float
     + __init__(self: Product, name: string, price: float)
+    + __hash__(self)
+    + __eq__(self, other)
 }
 
 class Exception
@@ -11,9 +12,11 @@ class Exception
 class TooManyProductsFoundError
 
 abstract class Server {
+    +__init__(self, *args, **kwargs)
     + n_max_returned_entries: int = 5
+    +{static} matched(name: str, n_letters: int)
     +{abstract} get_entries(self, n_letters: int)
-
+    +product_number_validator(self, result)
 }
 
 class ListServer {
@@ -27,13 +30,14 @@ class MapServer {
 }
 
 class Client {
+    + __init__(self, server: ServerType)
     + get_total_price(self, n_letters: Optional[int])
 }
 
 
 Server <|-- ListServer
 Server <|-- MapServer
-TooManyProductsFoundError <.. Server : << uses >>
+TooManyProductsFoundError <.. Server : << throws >>
 Server <|-- Client
 Exception <|-- TooManyProductsFoundError
 MapServer *-- Product

@@ -38,7 +38,7 @@ class Client {
 Server <|-- ListServer
 Server <|-- MapServer
 TooManyProductsFoundError <.. Server : << throws >>
-Server <|-- Client
+Server o-- Client
 Exception <|-- TooManyProductsFoundError
 MapServer *-- Product
 ListServer *-- Product

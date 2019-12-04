@@ -37,7 +37,7 @@ class Server(ABC):
 
     @abstractmethod
     def get_entries(self, n_letters: int = 1):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def product_number_validator(self, result):
         if len(result) > self.n_max_returned_entries:

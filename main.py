@@ -7,7 +7,7 @@ product_4 = Product('ab11', 999)
 product_5 = Product('Abd134', 123)
 product_6 = Product('Addr12', 211)
 product_7 = Product('Aaa123', 111)
-product_8 = Product('huj99', 10)
+product_8 = Product('has99', 10)
 
 product_list = [product_1, product_2, product_3, product_4, product_5, product_6, product_7, product_8]
 
@@ -43,12 +43,6 @@ product_list = [product_1, product_2, product_3, product_4, product_5, product_6
 server_list = ListServer(product_list)
 client = Client(server_list)
 
-# print(client.get_total_price(2))
-
-pr = client.server.products
-
-for elem in pr:
-    print(f'Name: {elem.name}, Price: {elem.price}')
 
 
 

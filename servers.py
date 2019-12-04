@@ -84,6 +84,7 @@ ServerType = TypeVar('ServerType', bound=Server)
 
 
 class Client:
+
     def __init__(self, server: ServerType):
         self.server = server
 

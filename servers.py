@@ -81,6 +81,12 @@ class Client:
     def __init__(self, server: ServerType):
         self.server = server
 
+    def __hash__(self):
+        return hash((self.name, self.price))
+
+    def __eq__(self, other):
+        return self.name == other.name and self.price == other.price
+
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         try:
             total_price: float = 0
@@ -89,7 +95,7 @@ class Client:
             for elem in product_list:
                 total_price += elem.price
         except TooManyProductsFoundError:
-                return None
+            return None
 
         if len(product_list) == 0:
             return None

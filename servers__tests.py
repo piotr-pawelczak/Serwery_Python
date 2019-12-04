@@ -1,3 +1,6 @@
+# Norbert Sak, 302910
+# Piotr Pawelczak, 302894
+
 import unittest
 from collections import Counter
 

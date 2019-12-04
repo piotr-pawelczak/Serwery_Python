@@ -1,4 +1,6 @@
-#!/usr/bin/python
+# Norbert Sak, 302910
+# Piotr Pawelczak, 302894
+# !/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from typing import Optional, List, TypeVar
